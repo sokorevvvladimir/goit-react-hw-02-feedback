@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const BaseList = styled.ul`
@@ -50,3 +51,9 @@ const FeedbackOptions = ({ positiveReview, neutralReview, negativeReview }) => {
 };
 
 export default FeedbackOptions;
+
+FeedbackOptions.propTypes = {
+  positiveReview: PropTypes.func.isRequired,
+  neutralReview: PropTypes.func.isRequired,
+  negativeReview: PropTypes.func.isRequired,
+};

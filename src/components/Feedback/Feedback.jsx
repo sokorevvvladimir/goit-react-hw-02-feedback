@@ -17,30 +17,11 @@ class Feedback extends Component {
     bad: 0,
   };
 
-  onGoodClick = () => {
+  onClick = name => {
     this.setState(prevState => {
-      return { good: prevState.good + 1 };
+      return { [name]: prevState[name] + 1 };
     });
   };
-
-  onNeutralClick = () => {
-    this.setState(prevState => {
-      return { neutral: prevState.neutral + 1 };
-    });
-  };
-
-  onBadClick = () => {
-    this.setState(prevState => {
-      return { bad: prevState.bad + 1 };
-    });
-  };
-
-  //   onClick = e => {
-  //     const name = e.currentTarget.textContent.toLowerCase();
-  //     this.setState(prevState => {
-  //       return { [name]: prevState[name] + 1 };
-  //     });
-  //   };
 
   countTotalFeedback = () => {
     const values = Object.values(this.state);
@@ -56,17 +37,17 @@ class Feedback extends Component {
     return Number.isNaN(res) ? 0 : Math.round(res);
   };
 
+  optionsGatherer = () => Object.keys(this.state);
+
   render() {
     const total = this.countTotalFeedback();
     const positivePercentage = this.countPositiveFeedbackPercentage();
+    const options = this.optionsGatherer();
+
     return (
       <CenteredDiv>
         <Section title="Please leave feedback">
-          <FeedbackOptions
-            positiveReview={this.onGoodClick}
-            neutralReview={this.onNeutralClick}
-            negativeReview={this.onBadClick}
-          />
+          <FeedbackOptions options={options} onLeaveFeedback={this.onClick} />
         </Section>
         <Section title="Statistics">
           {total === 0 ? (

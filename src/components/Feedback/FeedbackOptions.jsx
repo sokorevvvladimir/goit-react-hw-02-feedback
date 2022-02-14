@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { nanoid } from 'nanoid';
 
 const BaseList = styled.ul`
   list-style: none;
@@ -26,34 +27,23 @@ const CommonLi = styled.li`
   margin-right: 5px;
 `;
 
-const FeedbackOptions = ({ positiveReview, neutralReview, negativeReview }) => {
+const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
-    <>
-      <FlexList>
-        <CommonLi>
-          <Button type="button" onClick={positiveReview}>
-            Good
+    <FlexList>
+      {options.map(option => (
+        <CommonLi key={nanoid()}>
+          <Button type="button" onClick={() => onLeaveFeedback(option)}>
+            {option}
           </Button>
         </CommonLi>
-        <CommonLi>
-          <Button type="button" onClick={neutralReview}>
-            Neutral
-          </Button>
-        </CommonLi>
-        <li>
-          <Button type="button" onClick={negativeReview}>
-            Bad
-          </Button>
-        </li>
-      </FlexList>
-    </>
+      ))}
+    </FlexList>
   );
 };
 
 export default FeedbackOptions;
 
 FeedbackOptions.propTypes = {
-  positiveReview: PropTypes.func.isRequired,
-  neutralReview: PropTypes.func.isRequired,
-  negativeReview: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string.isRequired),
+  onLeaveFeedback: PropTypes.func.isRequired,
 };
